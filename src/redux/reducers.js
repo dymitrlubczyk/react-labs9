@@ -1,7 +1,12 @@
-import { EMPLOYEES_LOADED,EMPLOYEE_CREATED } from './constants';
+import {EMPLOYEES_LOADED,
+        EMPLOYEE_CREATED,
+        FETCH_DATA_LAUNCH,
+        FETCH_DATA_PROPERLY,
+        FETCH_DATA_ERROR } from './constants'
 
 export const initialState = {
   employees: [],
+  error: null,
   loaded: false
 };
 
@@ -14,12 +19,26 @@ const appReducer = (state = initialState, action) => {
       return Object.assign({}, state, { employees,loaded:true});
     }
 
-
     case EMPLOYEE_CREATED: {
-      const  {employee}  = action.payload; 
+      const  { employee } = action.payload; 
       const updatedList=[...state.employees,employee];
       return Object.assign({},state,{ employees: updatedList,loaded:false });
     }
+
+    case FETCH_DATA_LAUNCH:{
+      return Object.assign({},state,{loaded:false});
+    }
+
+    case FETCH_DATA_PROPERLY:{
+      const { employees } = action.payload;
+      return Object.assign({},state,{ employees,loaded:true});
+    }
+
+    case FETCH_DATA_ERROR:{
+      const { error } = action.payload
+      return Object.assign({},state,{ error,loaded:true});
+    }
+
     default:
         return state
   }
