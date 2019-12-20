@@ -15,28 +15,29 @@ export const initialState = {
 const appReducer = (state = initialState, action) => {
   switch (action.type) {
     case EMPLOYEES_LOADED: {
-      const { employees } = action.payload;
-      return Object.assign({}, state, { employees,loaded:true});
+      const emps = action.payload;
+      return  {...state,employees:emps,loaded:true}
     }
 
     case EMPLOYEE_CREATED: {
-      const  { employee } = action.payload; 
+      const  employee  = action.payload; 
       const updatedList=[...state.employees,employee];
-      return Object.assign({},state,{ employees: updatedList,loaded:false });
+      return  {...state,employees:updatedList,loaded:false}
     }
 
     case FETCH_DATA_LAUNCH:{
-      return Object.assign({},state,{loaded:false});
+      return  {...state,loaded:false}
     }
 
     case FETCH_DATA_PROPERLY:{
-      const { employees } = action.payload;
-      return Object.assign({},state,{ employees,loaded:true});
+      const emps = action.payload;
+      console.log(emps);
+      return {...state,employees:emps,loaded:true}
     }
 
     case FETCH_DATA_ERROR:{
-      const { error } = action.payload
-      return Object.assign({},state,{ error,loaded:true});
+      const error = action.payload
+      return {...state,error:error,loaded:true}
     }
 
     default:
