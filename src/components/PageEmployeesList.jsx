@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import {employeesLoaded,fetchData} from '../redux/actions'
+import { employeesLoaded,fetchData } from '../redux/actions'
 
 const EmployeeLine = ({ employee }) => <div>{employee.name} ({employee.age} yrs old): {employee.company}</div>
 
@@ -17,7 +17,6 @@ class PageEmployeesList extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props)
     const { fetchData } = this.props;
     fetchData();
   }
@@ -32,8 +31,9 @@ class PageEmployeesList extends React.Component {
     
     return (
       <div>
+        <div style={{textAlign:'right'}}>{this.props.user.full_name}</div>
         <h1>Employees List:</h1>
-        {employees && employees.map((employee => <EmployeeLine key={employee._id} employee={employee} />))}
+        {employees && employees.map((employee => <EmployeeLine key={employee._id || employee.id} employee={employee} />))}
         <Link to="/new">
           <button>Create employee</button>
         </Link>
@@ -45,6 +45,7 @@ class PageEmployeesList extends React.Component {
 const mapStateToProps = (state /*, ownProps*/) => {
   return {
     employees: state.employees,
+    user:state.user,
     loaded: state.loaded
   }
 }
